@@ -1,0 +1,141 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-venta-heading" data-cy="VentaCreateUpdateHeading" jhiTranslate="concesionarioApp.venta.home.createOrEditLabel">
+        Create or edit a Venta
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.venta.fecha" for="field_fecha">Fecha</label>
+          <div class="input-group">
+            <input
+              id="field_fecha"
+              data-cy="fecha"
+              type="text"
+              class="form-control"
+              name="fecha"
+              ngbDatepicker
+              #fechaDp="ngbDatepicker"
+              formControlName="fecha"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fecha')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.venta.matricula_coche" for="field_matricula_coche"
+            >Matricula Coche</label
+          >
+          <select
+            class="form-control"
+            id="field_matricula_coche"
+            data-cy="matricula_coche"
+            name="matricula_coche"
+            formControlName="matricula_coche"
+          >
+            <option *ngIf="editForm.get(['matricula_coche'])!.value == null" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                cocheOption.id === editForm.get('matricula_coche')!.value?.id ? editForm.get('matricula_coche')!.value : cocheOption
+              "
+              *ngFor="let cocheOption of matricula_cochesCollection; trackBy: trackCocheById"
+            >
+              {{ cocheOption.matricula }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['matricula_coche'])!.invalid &&
+            (editForm.get(['matricula_coche'])!.dirty || editForm.get(['matricula_coche'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['matricula_coche'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.venta.cliente" for="field_cliente">Cliente</label>
+          <select class="form-control" id="field_cliente" data-cy="cliente" name="cliente" formControlName="cliente">
+            <option *ngIf="!editForm.get('cliente')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="clienteOption.id === editForm.get('cliente')!.value?.id ? editForm.get('cliente')!.value : clienteOption"
+              *ngFor="let clienteOption of clientesSharedCollection; trackBy: trackClienteById"
+            >
+              {{ clienteOption.nombre }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['cliente'])!.invalid && (editForm.get(['cliente'])!.dirty || editForm.get(['cliente'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['cliente'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.venta.trabajador" for="field_trabajador">Trabajador</label>
+          <select class="form-control" id="field_trabajador" data-cy="trabajador" name="trabajador" formControlName="trabajador">
+            <option *ngIf="!editForm.get('trabajador')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                trabajadorOption.id === editForm.get('trabajador')!.value?.id ? editForm.get('trabajador')!.value : trabajadorOption
+              "
+              *ngFor="let trabajadorOption of trabajadorsSharedCollection; trackBy: trackTrabajadorById"
+            >
+              {{ trabajadorOption.nombre }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['trabajador'])!.invalid && (editForm.get(['trabajador'])!.dirty || editForm.get(['trabajador'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['trabajador'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

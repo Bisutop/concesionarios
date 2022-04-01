@@ -1,0 +1,42 @@
+{
+  "changelogDate": "20220401073541",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Venta",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "id": false,
+      "otherEntityField": "matricula",
+      "otherEntityName": "coche",
+      "otherEntityRelationshipName": "venta",
+      "ownerSide": true,
+      "relationshipName": "matricula_coche",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "cliente",
+      "relationshipName": "cliente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "trabajador",
+      "relationshipName": "trabajador",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "service": "serviceClass"
+}

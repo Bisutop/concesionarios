@@ -1,0 +1,25 @@
+{
+  "concesionarioApp": {
+    "trabajador": {
+      "home": {
+        "title": "Trabajadors",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Trabajador",
+        "createOrEditLabel": "Crear o editar Trabajador",
+        "notFound": "Ningún Trabajadors encontrado"
+      },
+      "created": "Un nuevo Trabajador ha sido creado con el identificador {{ param }}",
+      "updated": "Un Trabajador ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Trabajador ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Trabajador {{ id }}?"
+      },
+      "detail": {
+        "title": "Trabajador"
+      },
+      "id": "ID",
+      "dni": "Dni",
+      "nombre": "Nombre"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-coche-heading" data-cy="CocheCreateUpdateHeading" jhiTranslate="concesionarioApp.coche.home.createOrEditLabel">
+        Create or edit a Coche
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.coche.matricula" for="field_matricula">Matricula</label>
+          <input type="text" class="form-control" name="matricula" id="field_matricula" data-cy="matricula" formControlName="matricula" />
+          <div *ngIf="editForm.get('matricula')!.invalid && (editForm.get('matricula')!.dirty || editForm.get('matricula')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('matricula')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.coche.color" for="field_color">Color</label>
+          <input type="text" class="form-control" name="color" id="field_color" data-cy="color" formControlName="color" />
+          <div *ngIf="editForm.get('color')!.invalid && (editForm.get('color')!.dirty || editForm.get('color')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('color')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.coche.anyo" for="field_anyo">Anyo</label>
+          <input type="number" class="form-control" name="anyo" id="field_anyo" data-cy="anyo" formControlName="anyo" />
+          <div *ngIf="editForm.get('anyo')!.invalid && (editForm.get('anyo')!.dirty || editForm.get('anyo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('anyo')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('anyo')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.coche.potencia" for="field_potencia">Potencia</label>
+          <input type="number" class="form-control" name="potencia" id="field_potencia" data-cy="potencia" formControlName="potencia" />
+          <div *ngIf="editForm.get('potencia')!.invalid && (editForm.get('potencia')!.dirty || editForm.get('potencia')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('potencia')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('potencia')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="concesionarioApp.coche.modelo" for="field_modelo">Modelo</label>
+          <select class="form-control" id="field_modelo" data-cy="modelo" name="modelo" formControlName="modelo">
+            <option *ngIf="!editForm.get('modelo')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="modeloOption.id === editForm.get('modelo')!.value?.id ? editForm.get('modelo')!.value : modeloOption"
+              *ngFor="let modeloOption of modelosSharedCollection; trackBy: trackModeloById"
+            >
+              {{ modeloOption.modelo }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['modelo'])!.invalid && (editForm.get(['modelo'])!.dirty || editForm.get(['modelo'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['modelo'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
