@@ -9,6 +9,7 @@ import { IVenta } from '../venta.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { VentaService } from '../service/venta.service';
 import { VentaDeleteDialogComponent } from '../delete/venta-delete-dialog.component';
+import { VentaDetailComponent } from '../detail/venta-detail.component';
 
 @Component({
   selector: 'jhi-venta',
@@ -59,6 +60,15 @@ export class VentaComponent implements OnInit {
 
   trackId(index: number, item: IVenta): number {
     return item.id!;
+  }
+
+  detail(venta:IVenta): void {
+    const modalRef = this.modalService.open(VentaDetailComponent, {size: 'lg', backdrop: 'static'});
+    modalRef.componentInstance.venta = venta;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'visto') {
+        this.loadPage();      }
+    })
   }
 
   delete(venta: IVenta): void {

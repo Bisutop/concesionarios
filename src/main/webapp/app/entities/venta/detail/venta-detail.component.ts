@@ -1,24 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component,  } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IVenta } from '../venta.model';
+import { VentaService } from '../service/venta.service';
 
 @Component({
-  selector: 'jhi-venta-detail',
   templateUrl: './venta-detail.component.html',
 })
-export class VentaDetailComponent implements OnInit {
-  venta: IVenta | null = null;
+export class VentaDetailComponent {
+  venta?: IVenta;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected ventaService: VentaService, protected activeModal: NgbActiveModal) {}
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ venta }) => {
-      this.venta = venta;
+
+  cancel(): void {
+    this.activeModal.dismiss
+  }
+
+  confirmVisto(id: number): void {
+    this.ventaService.find(id).subscribe(() => {
+      this.activeModal.close('visto');
     });
   }
 
-  previousState(): void {
-    window.history.back();
-  }
+
+
+
 }
